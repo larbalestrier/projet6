@@ -179,6 +179,7 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	
 }
 
 footer nav ul {
@@ -210,4 +211,21 @@ footer nav ul {
 .buttonSelect {
 	color: white;
 	background-color: #1D6154;
+}
+
+.forget-password {
+	text-decoration: underline;
+}
+
+.lien-login {
+	font-weight: 600;
+}
+
+a{
+	color: black;
+	text-decoration: none;
+}
+
+#filtres button {
+	height: 37px;
 }

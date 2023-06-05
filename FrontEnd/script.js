@@ -1,7 +1,7 @@
-// Sélectionner l'élément DOM qui contiendra la galerie
+// Sélectionner l'élément DOM qui contiendra la galerie et les filtres
 
 const gallery = document.querySelector('#gallery');   
-const divCategories = document.querySelector("#filtres");
+
     
 // appel de l'api et création des projets //
 fetch("http://localhost:5678/api/works")
@@ -24,14 +24,14 @@ fetch("http://localhost:5678/api/works")
   .catch(error => console.error(error));
 
 // création boutton tous //
-const buttonTous = document.querySelector('#filtres');
+const divCategories = document.querySelector("#filtres");
 const buttonT = document.createElement('button');
 buttonT.innerText = 'Tous';
 buttonT.setAttribute('class', 'button buttonSelect' );
-buttonTous.appendChild(buttonT);
+divCategories.appendChild(buttonT);
 buttonT.addEventListener('click',function() {btnTous();colorButton(buttonT)} )
 
-// // 
+//appel api et   création des filtres  // 
 fetch("http://localhost:5678/api/categories")
   .then(response => response.json())
   .then(dataButton =>{    
