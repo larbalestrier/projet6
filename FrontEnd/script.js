@@ -74,3 +74,6 @@ function colorButton (btn) {
   btn.classList.add("buttonSelect")
 
 }
+
+
+// étape 3 //
