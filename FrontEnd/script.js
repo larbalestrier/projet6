@@ -77,3 +77,27 @@ function colorButton (btn) {
 
 
 // étape 3 //
+// login on mode édition //
+const bannier =document.querySelector('.loginOn');
+const loginOnOff = document.querySelector('.lien-login');
+const link = document.getElementById('link');
+
+
+
+
+
+function modeEdition () {
+  if (localStorage.getItem('token')){
+    bannier.style = "display:flex";
+    loginOnOff.innerText = "logout";
+    loginOnOff.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      link.href = "index.html";
+    }); 
+  } else {
+    bannier.style = "display:none";
+
+
+  } 
+}
+modeEdition()

@@ -20,7 +20,7 @@ document.getElementById('login').addEventListener("submit", function(e){
     }
     })
   .then(data => {
-    console.log(data.token) ;
+    localStorage.setItem("token", data.token);
     window.location.href = "index.html";   
     })
   .catch(error => console.error(error));

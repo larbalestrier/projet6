@@ -229,3 +229,31 @@ a{
 #filtres button {
 	height: 37px;
 }
+
+/* mode edition login on  */
+.loginOn {
+	background-color: black;
+	height: 59px;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.loginOn-txt{
+	padding-right: 21px;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.loginOn-change{
+	background-color: white;
+	color: black;
+	border-radius: 25px;
+	padding: 11px 23px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 500;
+}
