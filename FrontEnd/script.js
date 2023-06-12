@@ -81,7 +81,8 @@ function colorButton (btn) {
 const bannier =document.querySelector('.loginOn');
 const loginOnOff = document.querySelector('.lien-login');
 const link = document.getElementById('link');
-
+const edit1 = document.querySelector('.btn-edit')
+const edit2 = document.querySelector('.btn-edit2')
 
 
 
@@ -89,14 +90,20 @@ const link = document.getElementById('link');
 function modeEdition () {
   if (localStorage.getItem('token')){
     bannier.style = "display:flex";
+    divCategories.style = "display:none";
+    edit1.style= "display:flex";
+    edit2.style= "display:flex";
     loginOnOff.innerText = "logout";
     loginOnOff.addEventListener("click", () => {
       localStorage.removeItem("token");
       link.href = "index.html";
+
     }); 
   } else {
     bannier.style = "display:none";
-
+    divCategories.style = "display:flex";
+    edit1.style= "display:none";
+    edit2.style= "display:none";
 
   } 
 }

@@ -257,3 +257,23 @@ a{
 	font-size: 14px;
 	font-weight: 500;
 }
+
+.btn-edit { 
+	display: flex;
+	gap : 11px ; 
+	padding-top: 16px;
+	padding-left: 10%;
+}
+
+.btn-edit2  {
+	display: flex;
+	margin-left: 31px;
+	gap: 10px;
+	margin-top: 10px;
+
+}
+
+.block-btn-edit2{
+	display: flex;
+	justify-content: center;
+}
