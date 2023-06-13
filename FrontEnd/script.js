@@ -10,6 +10,7 @@ fetch("http://localhost:5678/api/works")
     data.forEach(project => {
       const projectElement = document.createElement('div');
       projectElement.setAttribute ("categorieId", project.category.id)
+      projectElement.setAttribute ("id", project.id)
       const imgElement = document.createElement('img');
       const titleElement = document.createElement('h3');
       imgElement.src = `${project.imageUrl}`;
@@ -19,7 +20,7 @@ fetch("http://localhost:5678/api/works")
       gallery.appendChild(projectElement);
   
     });
-    console.log(data)
+    
   })
   .catch(error => console.error(error));
 
@@ -108,3 +109,95 @@ function modeEdition () {
   } 
 }
 modeEdition()
+
+// modal // 
+let modal = null
+
+const openModal = function (e) {
+  e.preventDefault()
+  const target = document.querySelector(e.target.getAttribute('href'))
+  target.style.display = "flex"
+  modal = target
+  modal.addEventListener('click' , closeModal)
+  modal.querySelector('.close-modal').addEventListener('click', closeModal)
+  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+  
+}
+
+const closeModal = function (e) {
+  if (modal === null) return;
+  e.preventDefault()
+  modal.style.display = "none"
+}
+
+const stopPropagation = function (e) {
+  e.stopPropagation()
+}
+
+document.querySelectorAll(".js-modal").forEach(a => {
+  a.addEventListener('click',openModal)
+  
+})
+
+
+// ajout gallery à la modal // 
+
+const galleryModal = document.querySelector("#gallery-modal");
+
+
+fetch("http://localhost:5678/api/works")
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(project => {
+      const projectElement = document.createElement('div');
+      const ContainerElement = document.createElement("div");
+      const imgElement = document.createElement("img");
+      const txtEdit = document.createElement("p");
+      const deleteLogo = document.createElement("i");
+      imgElement.src = `${project.imageUrl}`;
+      txtEdit.innerText= 'éditer';
+      deleteLogo.className = "fa-solid fa-trash-can position-logo-delete";
+      deleteLogo.id = "deleteProject"
+      projectElement.setAttribute ("idModal", project.id)
+      ContainerElement.appendChild(imgElement)
+      ContainerElement.appendChild(txtEdit)
+      ContainerElement.appendChild(deleteLogo)      
+      projectElement.appendChild(ContainerElement)
+      galleryModal.appendChild(projectElement)
+      deleteLogo.addEventListener('click', function(event) {
+        deleteprojet(project.id);
+      });
+    });
+  })
+  .catch(error => console.error(error));
+
+
+  // delete un pprojet // 
+
+    function deleteprojet(id){
+      const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
+        method: "DELETE",
+        headers: {
+        "Access-Control-Allow-Origin": "*",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        })
+        .then(response =>{
+          if (response.ok) {
+          return response;
+        } else { 
+          throw new Error(response.status);
+        }})
+        .then(data=> { 
+          console.log("Projet supprimé avec succès.");
+          const projetdelete = document.getElementById(id)
+          const projetdeletemodal = document.querySelector('div[idmodal="'+ id +'"]')
+          projetdelete.remove();
+          projetdeletemodal.remove();
+          
+        })
+        .catch(error => console.error(error));
+        
+
+      }
+  

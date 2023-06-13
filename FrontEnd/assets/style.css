@@ -241,6 +241,7 @@ a{
 }
 
 .loginOn-txt{
+	padding-left: 12px;
 	padding-right: 21px;
 	font-size: 16px;
 	font-weight: 400;
@@ -276,4 +277,98 @@ a{
 .block-btn-edit2{
 	display: flex;
 	justify-content: center;
+}
+
+.modal {
+	position: fixed;
+	display: none;
+	
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background:rgba(0, 0, 0, 0.09) ;
+	
+}
+
+.modal-wrapper {
+	overflow: auto;
+	background-color: #fff;
+	width: 630px;
+	height: 731px;
+	border-radius: 10px;
+	padding: 30px;
+
+}
+
+.close-modal {
+	margin-left: 95%;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 26px;
+	font-weight: 400;
+	padding-bottom:46px;
+}
+
+/* class pour la galery dans la modal  */
+
+#gallery-modal {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	margin: 0 75px;
+	border-bottom: 1px solid  #B3B3B3;
+	padding-bottom: 35px;
+}
+
+#gallery-modal img {
+	height: 104px;
+	width: 78px;
+
+}
+
+#gallery-modal div {
+	margin-bottom: 10px;
+	position: relative;
+}
+#gallery-modal p {
+	padding-top: 1px;
+	font-size: 12px;
+}
+
+.btn-add-photo {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 237px;
+	text-align: center;
+	border-radius: 60px ;
+	padding: 10px 49px 10px 49px
+}
+
+.edit-gallery-modal {
+	display: flex;
+	flex-direction: column;
+    align-items: center;
+}
+
+.txt-delete-gallery{
+	color: #D65353;
+}
+
+.position-logo-delete {
+	position: absolute;
+	top:6px ;
+	right: 20px;
+	background-color: #000;
+	color: #fff;
+	font-size: 10px;
+	padding: 4px;
+	border-radius: 2px;
+	
 }
