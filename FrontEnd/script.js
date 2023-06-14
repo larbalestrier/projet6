@@ -172,32 +172,55 @@ fetch("http://localhost:5678/api/works")
   .catch(error => console.error(error));
 
 
-  // delete un pprojet // 
+// delete un pprojet // 
 
-    function deleteprojet(id){
-      const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
-        method: "DELETE",
-        headers: {
-        "Access-Control-Allow-Origin": "*",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        })
-        .then(response =>{
-          if (response.ok) {
-          return response;
-        } else { 
-          throw new Error(response.status);
-        }})
-        .then(data=> { 
-          console.log("Projet supprimé avec succès.");
-          const projetdelete = document.getElementById(id)
-          const projetdeletemodal = document.querySelector('div[idmodal="'+ id +'"]')
-          projetdelete.remove();
-          projetdeletemodal.remove();
-          
-        })
-        .catch(error => console.error(error));
-        
+function deleteprojet(id){
+  const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+    "Access-Control-Allow-Origin": "*",
+    Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+    })
+    .then(response =>{
+      if (response.ok) {
+      return response;
+    } else { 
+      throw new Error(response.status);
+    }})
+    .then(data=> { 
+      console.log("Projet supprimé avec succès.");
+      const projetdelete = document.getElementById(id)
+      const projetdeletemodal = document.querySelector('div[idmodal="'+ id +'"]')
+      projetdelete.remove();
+      projetdeletemodal.remove();
+      
+    })
+    .catch(error => console.error(error));
+    
 
-      }
+  }
+
+
+/*modal ajout photo */ 
+const modal1 = document.getElementById('modal1')
+const modal2 = document.getElementById('modal2')
+const btnAddPhoto = document.querySelector('.btn-add-photo')
+
+
+
+btnAddPhoto.addEventListener('click',function(){
+  modal1.style.display = 'none'
+  modal2.style.display = 'flex'
   
+})
+
+/* retour sur la modal1 */
+
+const backModal1 = document.querySelector('.back-modal1')
+
+backModal1.addEventListener('click',function(){
+  modal1.style.display = 'flex'
+  modal2.style.display = 'none'
+
+})

@@ -48,15 +48,17 @@
 		<div class="block-btn-edit2"><h2>Mes Projets</h2>
 			<div class="btn-edit2" >
 				<i class="fa-regular fa-pen-to-square"></i>
-				<p><a href="#modal1" class="js-modal">Modifier</p></a>
+				<p><a href="#modal" class="js-modal">Modifier</p></a>
 			</div>
 		</div>
 
 
 
-		<aside id="modal1" class="modal">
+		<aside id="modal" class="modal">
 			<div class="modal-wrapper js-modal-stop">
 				<i class="fa-solid fa-xmark close-modal " ></i>
+				<div  id="modal1">
+				
 				<h3 class="modal-title"> Galerie photo</h3>
 				<div id="gallery-modal" >
 				</div>
@@ -66,7 +68,27 @@
 					</button>
 					<p class="txt-delete-gallery">Supprimer la galerie</p>
 				</div>
+				</div>
+				<div  id="modal2">
+					<i class="fa-solid fa-arrow-left back-modal1"></i>
+					<h3 class="modal-title">Ajout photo</h3>
+					<div class="container-modal2">
+						<div class="box-add-photo">
+							<i class="fa-regular fa-image logo-addphoto"></i>
+							<input type="file" id="photoInput" >
+							<label for="photoInput" class="btn-photoInput">+ Ajouter photo</label>
+							<p class="addphoto-txt">jpg, png : 4mo max</p>
+						</div>
+						<form action="" class="form-addphoto">
+							<label for="title" class="form-label">Titre</label>
+							<input type="text" id="title" name="title" class="form-size">
+							<label for="categorie" class="form-label "> Catégorie</label>
+							<select id="categorie" name="categorie" class="form-size" ></select>
+						</form>
+					</div>
+				</div>
 			</div>
+			
 		</aside>
 
 
