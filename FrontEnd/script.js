@@ -9,8 +9,8 @@ fetch("http://localhost:5678/api/works")
   .then(data => {
     data.forEach(project => {
       const projectElement = document.createElement('div');
-      projectElement.setAttribute ("categorieId", project.category.id)
-      projectElement.setAttribute ("id", project.id)
+      projectElement.setAttribute ("categorieId", project.category.id);
+      projectElement.setAttribute ("id", project.id);
       const imgElement = document.createElement('img');
       const titleElement = document.createElement('h3');
       imgElement.src = `${project.imageUrl}`;
@@ -182,19 +182,12 @@ function deleteprojet(id){
     Authorization: "Bearer " + localStorage.getItem("token"),
     },
     })
-    .then(response =>{
-      if (response.ok) {
-      return response;
-    } else { 
-      throw new Error(response.status);
-    }})
-    .then(data=> { 
+    .then(()=> { 
       console.log("Projet supprimé avec succès.");
       const projetdelete = document.getElementById(id)
       const projetdeletemodal = document.querySelector('div[idmodal="'+ id +'"]')
       projetdelete.remove();
-      projetdeletemodal.remove();
-      
+      projetdeletemodal.remove();   
     })
     .catch(error => console.error(error));
     
