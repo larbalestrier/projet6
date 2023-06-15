@@ -296,17 +296,6 @@ photoInput.addEventListener('change', function(event) {
       valideCategorie.addEventListener("change", validerForm);
       photoInput.addEventListener("change", validerForm);
 
-      
- 
-
-
-
-
-
-
-
-
-
  /* envoie des données du formulaire */
 
 
