@@ -4,6 +4,14 @@ document.getElementById('login').addEventListener("submit", function(e){
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('mdp').value;
+    const errorMessage = document.createElement('p');
+    const form = document.getElementById('login');
+    const existingErrorMessage = form.querySelector('.error-message');
+    
+    if (existingErrorMessage) {
+        form.removeChild(existingErrorMessage);
+    }
+
     fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
@@ -23,7 +31,11 @@ document.getElementById('login').addEventListener("submit", function(e){
     localStorage.setItem("token", data.token);
     window.location.href = "index.html";   
     })
-  .catch(error => console.error(error));
+  .catch(error => {
+    errorMessage.innerText = 'le mot de passe ou l\'email est incorrecte'
+    errorMessage.classList.add('error-message')
+    form.appendChild(errorMessage)
+  })
 });
     
 

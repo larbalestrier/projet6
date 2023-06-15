@@ -217,6 +217,12 @@ footer nav ul {
 	text-decoration: underline;
 }
 
+.error-message{
+	color: red;
+	text-align: center;
+    padding-bottom: 50px;
+}
+
 .lien-login {
 	font-weight: 600;
 }
