@@ -304,7 +304,8 @@ a{
 }
 
 .close-modal {
-	margin-left: 95%;
+	margin-left: 95%; 
+	cursor: pointer;
 }
 
 .modal-title {
@@ -312,6 +313,7 @@ a{
 	font-size: 26px;
 	font-weight: 400;
 	padding-bottom:46px;
+	padding-top: 16px;
 }
 
 /* class pour la galery dans la modal  */
@@ -386,6 +388,13 @@ a{
 	flex-direction: column;
 }
 
+.back-modal1 {
+	cursor: pointer;
+	margin-top: -15px;
+	height: 15px;
+	width: 21px;
+}
+
 .container-modal2{
 	margin-left: 105px;
 	margin-right: 105px;
@@ -440,3 +449,29 @@ a{
 .form-size{
 	height: 35px;
 }
+
+.btn-valider {
+	background-color: #A7A7A7;
+	color: white;
+	border-radius: 60px;
+	margin-top: 32px;
+	width: 37%;
+	padding: 10px 49px;
+	border: none;
+	cursor: pointer;
+}
+
+.container-btn-valider{
+	display: flex;
+	justify-content: center;
+}
+/* chargement img form */ 
+.load-img{
+	width: 129px;
+}
+
+/* formulaire validé */ 
+.btn-green {
+	background-color: #1D6154;
+	color: white;
+  }

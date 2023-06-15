@@ -58,7 +58,6 @@
 			<div class="modal-wrapper js-modal-stop">
 				<i class="fa-solid fa-xmark close-modal " ></i>
 				<div  id="modal1">
-				
 				<h3 class="modal-title"> Galerie photo</h3>
 				<div id="gallery-modal" >
 				</div>
@@ -73,19 +72,26 @@
 					<i class="fa-solid fa-arrow-left back-modal1"></i>
 					<h3 class="modal-title">Ajout photo</h3>
 					<div class="container-modal2">
-						<div class="box-add-photo">
+						<form action="" class="form-addphoto">
+							<div class="box-add-photo">
 							<i class="fa-regular fa-image logo-addphoto"></i>
 							<input type="file" id="photoInput" >
 							<label for="photoInput" class="btn-photoInput">+ Ajouter photo</label>
 							<p class="addphoto-txt">jpg, png : 4mo max</p>
+							<div id="image-preview"></div>
 						</div>
-						<form action="" class="form-addphoto">
 							<label for="title" class="form-label">Titre</label>
 							<input type="text" id="title" name="title" class="form-size">
-							<label for="categorie" class="form-label "> Catégorie</label>
-							<select id="categorie" name="categorie" class="form-size" ></select>
+							<label for="categorie-modal" class="form-label "> Catégorie</label>
+							<select id="categorie-modal" name="categorie" class="form-size" >
+								<option value=""></option>
+							</select>
 						</form>
 					</div>
+					<div class="container-btn-valider">
+						<button id="validerButton" class="btn-valider">Valider</button>
+					</div>
+					
 				</div>
 			</div>
 			

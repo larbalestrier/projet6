@@ -224,3 +224,122 @@ backModal1.addEventListener('click',function(){
   modal2.style.display = 'none'
 
 })
+
+
+/* creation des categorie pour le form*/
+const listeDeroulante = document.querySelector("select");
+
+fetch("http://localhost:5678/api/categories")
+  .then(response => response.json())
+  .then(modalCategories =>{    
+  modalCategories.forEach((modalCategorie)=> {
+    const listeCategorie = document.createElement("option");
+    listeCategorie.innerText = modalCategorie.name ;
+    listeCategorie.setAttribute("value", modalCategorie.id);
+    
+    listeDeroulante.appendChild(listeCategorie);
+    })
+})
+
+
+/* data form*/
+
+const photoInput = document.getElementById('photoInput');
+const boxAddPhoto = document.querySelector('.box-add-photo');
+const imagePreview = document.getElementById('image-preview');
+
+photoInput.addEventListener('change', function(event) {
+  // Vérifie si des fichiers ont été sélectionnés
+  if (event.target.files && event.target.files[0]) {
+    const reader = new FileReader();
+
+    // Lecture du fichier sélectionné en tant que URL de données
+    reader.onload = function(e) {
+      // Crée un élément d'image pour l'aperçu
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.classList.add('load-img')
+
+      // Supprime tout contenu précédent de la div parente
+      boxAddPhoto.innerHTML = '';
+
+      // Ajoute l'image à la div parent
+      boxAddPhoto.appendChild(img);
+    };
+
+    // Lit le fichier en tant qu'URL de données
+    reader.readAsDataURL(event.target.files[0]);
+  }
+});
+
+
+/*   Validation du form*/
+
+
+      const valideImg = document.getElementById('image-preview')
+      const valideTitle =document.getElementById('title')
+      const valideCategorie = document.getElementById('categorie-modal')
+      const valideBtn = document.getElementById('validerButton')
+
+      function validerForm () {
+        if (valideTitle.value !== "" && valideCategorie.value !== "" && photoInput.files.length > 0 ) {
+          valideBtn.classList.add("btn-green");
+          console.log("formulaire ok");
+          return true;
+        } else {
+          valideBtn.classList.remove("btn-green");
+          console.log("formulaire mal rempli");
+          return false;
+        }
+      }
+      valideTitle.addEventListener("input", validerForm);
+      valideCategorie.addEventListener("change", validerForm);
+      photoInput.addEventListener("change", validerForm);
+
+      
+ 
+
+
+
+
+
+
+
+
+
+ /* envoie des données du formulaire */
+
+
+          valideBtn.addEventListener("click", async (e) => {
+            e.preventDefault()
+
+          if (validerForm() == true) {
+            const formData = new FormData ();
+            formData.append("title", valideTitle.value);
+            formData.append("category", valideCategorie.value);
+            formData.append("image",photoInput.files[0]);
+            try {
+              const response = await fetch("http://localhost:5678/api/works",  {
+                  method: "POST",
+                  headers: {
+                    "Acces-Control-Allow-Origin": "*",
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                  },
+                  body: formData ,
+                })
+                
+              if (response.ok) {
+                // Réponse de l'API réussie
+                const projet = await response.json();
+                console.log("Projet ajouté avec succès:", projet);
+              } else {
+                // Réponse de l'API avec une erreur
+                console.error("Erreur lors de l'ajout du projet:", response.status);
+              }
+            } catch(error)  {
+              // Erreur lors de la requête
+              console.error('Erreur lors de la requête vers l\'API', error);
+            }
+          }
+          })
+
