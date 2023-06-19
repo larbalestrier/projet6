@@ -3,26 +3,37 @@
 const gallery = document.querySelector('#gallery');   
 
     
-// appel de l'api et création des projets //
-fetch("http://localhost:5678/api/works")
-  .then(response => response.json())
-  .then(data => {
-    data.forEach(project => {
-      const projectElement = document.createElement('div');
-      projectElement.setAttribute ("categorieId", project.category.id);
-      projectElement.setAttribute ("id", project.id);
-      const imgElement = document.createElement('img');
-      const titleElement = document.createElement('h3');
-      imgElement.src = `${project.imageUrl}`;
-      titleElement.innerText = `${project.title}`;
-      projectElement.appendChild(imgElement);
-      projectElement.appendChild(titleElement);
-      gallery.appendChild(projectElement);
-  
-    });
-    
-  })
-  .catch(error => console.error(error));
+/* function pour l'appel à l'API */ 
+async function works() {
+  const response = await fetch("http://localhost:5678/api/works")
+  const dataWorks = await response.json();
+  return dataWorks;
+}
+
+async function categories (){
+  const response = await fetch("http://localhost:5678/api/categories");
+  const dataCategories = await response.json();
+  return dataCategories;
+}
+
+
+/* affichage des projet sur la page d 'accueil  */
+async function projets (){
+  const dataProjets = await works();
+  dataProjets.forEach((project) => {
+    const projectElement = document.createElement('div');
+    projectElement.setAttribute ("categorieId", project.category.id);
+    projectElement.setAttribute ("id", project.id);
+    const imgElement = document.createElement('img');
+    const titleElement = document.createElement('h3');
+    imgElement.src = `${project.imageUrl}`;
+    titleElement.innerText = `${project.title}`;
+    projectElement.appendChild(imgElement);
+    projectElement.appendChild(titleElement);
+    gallery.appendChild(projectElement);
+  });
+}
+projets ()
 
 // création boutton tous //
 const divCategories = document.querySelector("#filtres");
@@ -32,11 +43,10 @@ buttonT.setAttribute('class', 'button buttonSelect' );
 divCategories.appendChild(buttonT);
 buttonT.addEventListener('click',function() {btnTous();colorButton(buttonT)} )
 
-//appel api et   création des filtres  // 
-fetch("http://localhost:5678/api/categories")
-  .then(response => response.json())
-  .then(dataButton =>{    
-  dataButton.forEach((categorie)=> {
+/*création des bouttons des filtres  */
+async function filtres () {
+  const dataCategories = await categories();
+  dataCategories.forEach((categorie) => {
     const btnCategorie =document.createElement("button");
     btnCategorie.innerText = categorie.name ;
     btnCategorie.setAttribute("class", "button");
@@ -44,10 +54,12 @@ fetch("http://localhost:5678/api/categories")
     console.log(btnCategorie)
     divCategories.appendChild(btnCategorie);
     btnCategorie.addEventListener('click', function(){filtreCategories(categorie.id);colorButton(this)} )
-    })
-})
+  })
+}
+filtres ()
 
 
+/* function pour pouvoir filtrer les projets  */
 function filtreCategories (id){
   const projectGallery =  gallery.querySelectorAll("div")
   projectGallery.forEach(element => {
@@ -59,7 +71,6 @@ function filtreCategories (id){
   });
 }
 
-
 function btnTous () {
   const projectGallery =  gallery.querySelectorAll("div")
   projectGallery.forEach(element => {
@@ -68,12 +79,10 @@ function btnTous () {
   );
 }
 
-
 function colorButton (btn) {
   const btnSelect = document.querySelector(".buttonSelect")
   btnSelect.classList.remove("buttonSelect")
   btn.classList.add("buttonSelect")
-
 }
 
 
@@ -144,36 +153,32 @@ document.querySelectorAll(".js-modal").forEach(a => {
 
 const galleryModal = document.querySelector("#gallery-modal");
 
-
-fetch("http://localhost:5678/api/works")
-  .then(response => response.json())
-  .then(data => {
-    data.forEach(project => {
-      const projectElement = document.createElement('div');
-      const ContainerElement = document.createElement("div");
-      const imgElement = document.createElement("img");
-      const txtEdit = document.createElement("p");
-      const deleteLogo = document.createElement("i");
-      imgElement.src = `${project.imageUrl}`;
-      txtEdit.innerText= 'éditer';
-      deleteLogo.className = "fa-solid fa-trash-can position-logo-delete";
-      deleteLogo.id = "deleteProject"
-      projectElement.setAttribute ("idModal", project.id)
-      ContainerElement.appendChild(imgElement)
-      ContainerElement.appendChild(txtEdit)
-      ContainerElement.appendChild(deleteLogo)      
-      projectElement.appendChild(ContainerElement)
-      galleryModal.appendChild(projectElement)
-      deleteLogo.addEventListener('click', function(event) {
-        deleteprojet(project.id);
-      });
-    });
-  })
-  .catch(error => console.error(error));
-
+async function projetModal (){
+  const dataProjetsModal = await works();
+  dataProjetsModal.forEach((project) =>{
+    const projectElement = document.createElement('div');
+    const ContainerElement = document.createElement("div");
+    const imgElement = document.createElement("img");
+    const txtEdit = document.createElement("p");
+    const deleteLogo = document.createElement("i");
+    imgElement.src = `${project.imageUrl}`;
+    txtEdit.innerText= 'éditer';
+    deleteLogo.className = "fa-solid fa-trash-can position-logo-delete";
+    deleteLogo.id = "deleteProject"
+    projectElement.setAttribute ("idModal", project.id)
+    ContainerElement.appendChild(imgElement)
+    ContainerElement.appendChild(txtEdit)
+    ContainerElement.appendChild(deleteLogo)      
+    projectElement.appendChild(ContainerElement)
+    galleryModal.appendChild(projectElement)
+    deleteLogo.addEventListener('click', function(event) {
+      deleteprojet(project.id);
+    })
+  });
+}
+projetModal ()
 
 // delete un pprojet // 
-
 function deleteprojet(id){
   const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
@@ -200,16 +205,12 @@ const modal1 = document.getElementById('modal1')
 const modal2 = document.getElementById('modal2')
 const btnAddPhoto = document.querySelector('.btn-add-photo')
 
-
-
 btnAddPhoto.addEventListener('click',function(){
   modal1.style.display = 'none'
   modal2.style.display = 'flex'
-  
 })
 
 /* retour sur la modal1 */
-
 const backModal1 = document.querySelector('.back-modal1')
 
 backModal1.addEventListener('click',function(){
@@ -222,18 +223,17 @@ backModal1.addEventListener('click',function(){
 /* creation des categorie pour le form*/
 const listeDeroulante = document.querySelector("select");
 
-fetch("http://localhost:5678/api/categories")
-  .then(response => response.json())
-  .then(modalCategories =>{    
-  modalCategories.forEach((modalCategorie)=> {
+async function listeCategorieModal () {
+  const categorieModal = await categories()
+  categorieModal.forEach((modalCategorie) =>{
     const listeCategorie = document.createElement("option");
     listeCategorie.innerText = modalCategorie.name ;
     listeCategorie.setAttribute("value", modalCategorie.id);
-    
     listeDeroulante.appendChild(listeCategorie);
-    })
-})
+    });
+  }
 
+  listeCategorieModal();
 
 /* data form*/
 
@@ -269,59 +269,58 @@ photoInput.addEventListener('change', function(event) {
 /*   Validation du form*/
 
 
-      const valideImg = document.getElementById('image-preview')
-      const valideTitle =document.getElementById('title')
-      const valideCategorie = document.getElementById('categorie-modal')
-      const valideBtn = document.getElementById('validerButton')
+const valideImg = document.getElementById('image-preview')
+const valideTitle =document.getElementById('title')
+const valideCategorie = document.getElementById('categorie-modal')
+const valideBtn = document.getElementById('validerButton')
 
-      function validerForm () {
-        if (valideTitle.value !== "" && valideCategorie.value !== "" && photoInput.files.length > 0 ) {
-          valideBtn.classList.add("btn-green");
-          console.log("formulaire ok");
-          return true;
-        } else {
-          valideBtn.classList.remove("btn-green");
-          console.log("formulaire mal rempli");
-          return false;
-        }
-      }
-      valideTitle.addEventListener("input", validerForm);
-      valideCategorie.addEventListener("change", validerForm);
-      photoInput.addEventListener("change", validerForm);
+function validerForm () {
+  if (valideTitle.value !== "" && valideCategorie.value !== "" && photoInput.files.length > 0 ) {
+    valideBtn.classList.add("btn-green");
+    console.log("formulaire ok");
+    return true;
+  } else {
+    valideBtn.classList.remove("btn-green");
+    console.log("formulaire mal rempli");
+    return false;
+  }
+}
+valideTitle.addEventListener("input", validerForm);
+valideCategorie.addEventListener("change", validerForm);
+photoInput.addEventListener("change", validerForm);
 
  /* envoie des données du formulaire */
 
 
-          valideBtn.addEventListener("click", async (e) => {
-            e.preventDefault()
-
-          if (validerForm() == true) {
-            const formData = new FormData ();
-            formData.append("title", valideTitle.value);
-            formData.append("category", valideCategorie.value);
-            formData.append("image",photoInput.files[0]);
-            try {
-              const response = await fetch("http://localhost:5678/api/works",  {
-                  method: "POST",
-                  headers: {
-                    "Acces-Control-Allow-Origin": "*",
-                    Authorization: "Bearer " + localStorage.getItem("token"),
-                  },
-                  body: formData ,
-                })
-                
-              if (response.ok) {
-                // Réponse de l'API réussie
-                const projet = await response.json();
-                console.log("Projet ajouté avec succès:", projet);
-              } else {
-                // Réponse de l'API avec une erreur
-                console.error("Erreur lors de l'ajout du projet:", response.status);
-              }
-            } catch(error)  {
-              // Erreur lors de la requête
-              console.error('Erreur lors de la requête vers l\'API', error);
-            }
-          }
-          })
+valideBtn.addEventListener("click", async (e) => {
+  e.preventDefault()
+if (validerForm() == true) {
+  const formData = new FormData ();
+  formData.append("title", valideTitle.value);
+  formData.append("category", valideCategorie.value);
+  formData.append("image",photoInput.files[0]);
+  try {
+    const response = await fetch("http://localhost:5678/api/works",  {
+        method: "POST",
+        headers: {
+          "Acces-Control-Allow-Origin": "*",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: formData ,
+      })
+      
+    if (response.ok) {
+      // Réponse de l'API réussie
+      const projet = await response.json();
+      console.log("Projet ajouté avec succès:", projet);
+    } else {
+      // Réponse de l'API avec une erreur
+      console.error("Erreur lors de l'ajout du projet:", response.status);
+    }
+  } catch(error)  {
+    // Erreur lors de la requête
+    console.error('Erreur lors de la requête vers l\'API', error);
+  }
+}
+})
 
