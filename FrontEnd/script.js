@@ -94,9 +94,6 @@ const link = document.getElementById('link');
 const edit1 = document.querySelector('.btn-edit')
 const edit2 = document.querySelector('.btn-edit2')
 
-
-
-
 function modeEdition () {
   if (localStorage.getItem('token')){
     bannier.style = "display:flex";
@@ -107,7 +104,6 @@ function modeEdition () {
     loginOnOff.addEventListener("click", () => {
       localStorage.removeItem("token");
       link.href = "index.html";
-
     }); 
   } else {
     bannier.style = "display:none";
@@ -180,25 +176,32 @@ projetModal ()
 
 // delete un pprojet // 
 function deleteprojet(id){
-  const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
-    method: "DELETE",
-    headers: {
-    "Access-Control-Allow-Origin": "*",
-    Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-    })
-    .then(()=> { 
+  try {
+     const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    if (deleteAction.ok) {
       console.log("Projet supprimé avec succès.");
       const projetdelete = document.getElementById(id)
       const projetdeletemodal = document.querySelector('div[idmodal="'+ id +'"]')
       projetdelete.remove();
       projetdeletemodal.remove();   
-    })
-    .catch(error => console.error(error));
-    
-
-  }
-
+    } else if (response.status === 401) {
+      console.error("Non autorisé à effectuer cette action.");
+    } else {
+      console.error(
+        "Erreur lors de la suppression du projet:",
+        response.status
+      );
+    }
+  } catch (error) {
+    console.error("Erreur lors de la requête:", error);
+  }  
+}    
 
 /*modal ajout photo */ 
 const modal1 = document.getElementById('modal1')
