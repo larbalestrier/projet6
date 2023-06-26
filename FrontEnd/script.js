@@ -51,7 +51,6 @@ async function filtres () {
     btnCategorie.innerText = categorie.name ;
     btnCategorie.setAttribute("class", "button");
     btnCategorie.setAttribute("categorieId", categorie.id);
-    console.log(btnCategorie)
     divCategories.appendChild(btnCategorie);
     btnCategorie.addEventListener('click', function(){filtreCategories(categorie.id);colorButton(this)} )
   })
@@ -174,13 +173,13 @@ async function projetModal (){
 }
 projetModal ()
 
-// delete un pprojet // 
+// delete un projet // 
 function deleteprojet(id){
   try {
      const deleteAction = fetch(`http://localhost:5678/api/works/${id}`, {
       method: "DELETE",
       headers: {
-      "Access-Control-Allow-Origin": "*",
+      Accept: "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
@@ -306,7 +305,7 @@ if (validerForm() == true) {
     const response = await fetch("http://localhost:5678/api/works",  {
         method: "POST",
         headers: {
-          "Acces-Control-Allow-Origin": "*",
+          'Accept': 'application/json',
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: formData ,
